@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
-<head>
+<<head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
-    <title>Strona logowania</title>
+    <title>Dodano nowa osobę do Twojej listy</title>
 </head>
 <body>
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Dodano nową osobę do Twojej listy</h1>
+        <hr class="my-4"> Co chcesz teraz zrobić, wrócić do swojej strony czy wprowdzić dodatkowe dane dodanej osoby?
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" role="button" th:href="@{|/loguj|">Twoja strona</a>
+        </p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" role="button" th:href="@{|/person?id=${person.id}|}">Person</a>
+        </p>
+    </div>
+</div>
 
-<form method="post" action="/loguj">
-    <div class="form-group">
-        <div class="col-3">
-        <label for="login">Login:</label>
-        <input type="String" class="form-control" id="login" name="login" placeholder="login">
-    </div>
-    </div>
-    <div class="form-group">
-        <div class="col-3">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password"  placeholder="Password">
-    </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Zaloguj</button>
-</form>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

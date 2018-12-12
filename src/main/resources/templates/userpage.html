@@ -12,32 +12,88 @@
 <body>
 <div class="container">
     <div class="jumbotron jumbotron-fluid">
-        <div class="container">
+        <p class="container">
+            <p>
             <h1 class="display-4"th:text="|Witaj ${results.get(0).firstName} ${results.get(0).lastName}">Witaj!</h1>
-            <p class="lead">Oto twoja strona główna. Poniżej znajdziesz podsumowanie twoich zaległości. </p>
+                <img class="mr-3" th:src="@{${results.get(0).imageUrl}}"/>
+            <a class="lead">Oto twoja strona główna. Poniżej znajdziesz podsumowanie twoich zaległości. </a>
+        </p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+    <ul>
+           <li  class="media" th:each="person:${results.get(1)}">
+               <img class="mr-3" th:src="@{${person.image}}"/>
+                     <div class="media-body">
+                        <h5 class="mt-0 mb-1" th:text="|${person.firstName} ${person.lastName}" ></h5>
+                         <h5 th:text="|(+) ${person.toGet} |" ></h5>
+                         <h5 th:text="|(-) ${person.toGive}|"></h5>
+                         <h6 th:text="|Kategoria: pieniadze|"></h6>
+                         <h6><a th:href="@{|/person?id=${person.id}|}" th:text="|więcej|"></a></h6>
+                     </div>
+            </li>
+    </ul>
+        </div>
+        <div class="col-sm">
+            <div class="p-3 mb-2 bg-secondary text-white">
+                <h4 th:text="|Twoja lista osób|"></h4>
+                <form method="post" action="/dodajp">
+                    <div class="form-group">
+                        <div class="col-9">
+                            <input type="text" class="form-control" name="firstNameP" placeholder="imie">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-9">
+                            <input type="text" class="form-control" name="lastNameP" placeholder="nazwisko">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-3">
+                            <input type="text" class="form-control" name="ageP" placeholder="Wiek">
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <div class="lead">
+                        <div class="form-group p-2 mb-2">
+                            <button type="submit" class="btn btn-primary" name="val" value="dodaj">Dodaj</button>
+                        </div>
+                        </div>
+                        <div class="form-group p-2 mb-2">
+                            <button type="submit" class="btn btn-primary" name="val" value="usun">Usuń</button>
+                        </div>
+                    </div>
+                </form>
         </div>
     </div>
 </div>
-<div class="container">
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Imię</th>
-        <th>Nazwisko</th>
-        <th>Do dostania</th>
-        <th>Do oddania</th>
-        <th>Informacje dodatkowe</th>
-    </tr>
-    </thead>
-    <tr th:each="person:${results.get(1)}">
-        <th><a th:text="|${person.firstName}|"></a></th>
-        <th><a th:text="|${person.lastName}|"></a></th>
-        <th><a th:text="|${person.toGet}|"></a></th>
-        <th><a th:text="|${person.toGive}|"></a></th>
-        <th><a th:text="|${person.information}|"></a></th>
-    </tr>
-</table>
 </div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class="p-3 mb-2 bg-info text-white">
+            <h5 th:text="|SALDO: ${results.get(2).saldoAll} PLN|"></h5>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="p-3 mb-2 bg-danger text-white">
+            <h5 th:text="|SALDO (-): ${results.get(2).saldoGive} PLN|"></h5>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="p-3 mb-2 bg-success text-white">
+                <h5 th:text="|SALDO(+) :${results.get(2).saldoGet} PLN|"></h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

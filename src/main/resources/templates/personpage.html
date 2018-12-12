@@ -7,10 +7,41 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
-    <title th:text="|${person.fisrtName} ${person.lastName}">Person Page</title>
+    <title th:text="|${person.firstName} ${person.lastName}">Person Page</title>
 </head>
 <body>
 
+<div class="container" >
+    <div class="p-3 mb-2 bg-warning text-dark">
+            <div class="media">
+               <img class="mr-3" th:src="@{${person.image}}"/>
+                     <div class="media-body">
+                        <h1 class="mt-0 mb-1" th:text="|${person.firstName} ${person.lastName}" ></h1>
+                        <h4> </h4>
+                        <h4> </h4>
+                        <h4 th:text="|${person.about}|"> informacje o osobie</h4>
+                         <h4 th:text="|Lat: ${person.age}|"></h4>
+                    </div>
+             </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="p-3 mb-2 bg-danger text-white">
+                 <h4 th:text="|Do oddania: ${person.toGive}|"></h4>
+                <h6 th:text="|${person.informationGive}|"></h6>
+            </div>
+        </div>
+            <div class="col-md-6 text-right">
+                <div class="p-3 mb-2 bg-success text-white">
+                     <h4 th:text="|Do dostania: ${person.toGet}|"></h4>
+                    <h6 th:text="|${person.informationGet}|"></h6>
+                 </div>
+            </div>
+    </div>
+</div>
 
 
 

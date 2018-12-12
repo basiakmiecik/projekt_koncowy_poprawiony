@@ -33,4 +33,8 @@ public List<User> findAll(){
 public User findByLogin(String login){
    return entityManager.find(User.class, login);
 }
+
+public User findByID(Long id){
+    return entityManager.find(User.class, id);
+}
 }

@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.sql.PreparedStatement;
 import java.util.List;
 
@@ -17,6 +18,16 @@ public class PersonRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Transactional
+    public void savePerson(Person person){
+        entityManager.persist(person);
+    }
+
+    @Transactional
+    public void removePerson(Person person){
+        entityManager.remove(person);
+    }
 
     public List<Person> findAll() {
         String jpql = "select p from Person p";
@@ -32,6 +43,11 @@ public class PersonRepository {
         query.setParameter("userid",userid);
         List<Person> personID=query.getResultList();
         return personID;
+    }
+
+    public Person findById(Long id)
+    {
+        return entityManager.find(Person.class, id);
     }
 }
 

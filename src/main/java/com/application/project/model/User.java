@@ -13,6 +13,9 @@ public class User {
     private String LastName;
     private String login;
     private String password;
+    private String imageUrl;
+    private Double saldo;
+
 
     @OneToMany(mappedBy = "user")
     private List<Person> personList;
@@ -60,5 +63,19 @@ public class User {
         this.password = password;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
+    }
 }

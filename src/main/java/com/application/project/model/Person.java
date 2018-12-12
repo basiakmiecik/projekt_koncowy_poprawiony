@@ -15,7 +15,12 @@ public class Person {
     private String lastName;
     private Double toGive;
     private Double toGet;
-    private String information;
+    private String informationGet;
+    private String informationGive;
+    private String image;
+    private Integer age;
+    private String about;
+
 
     @ManyToOne
     private User user;
@@ -63,13 +68,51 @@ public class Person {
         this.toGet = toGet;
     }
 
-
-
-    public String getInformation() {
-        return information;
+    public String getImage() {
+        return image;
     }
 
-    public void setInformation(String information) {
-        this.information = information;
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getInformationGet() {
+        return informationGet;
+    }
+
+    public void setInformationGet(String informationGet) {
+        this.informationGet = informationGet;
+    }
+
+    public String getInformationGive() {
+        return informationGive;
+    }
+
+    public void setInformationGive(String informationGive) {
+        this.informationGive = informationGive;
     }
 }
