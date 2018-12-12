@@ -40,7 +40,7 @@
         <div class="col-sm">
             <div class="p-3 mb-2 bg-secondary text-white">
                 <h4 th:text="|Twoja lista osób|"></h4>
-                <form method="post" action="/dodajp">
+                <form method="post" th:action="@{|/dodajp|}">
                     <div class="form-group">
                         <div class="col-9">
                             <input type="text" class="form-control" name="firstNameP" placeholder="imie">

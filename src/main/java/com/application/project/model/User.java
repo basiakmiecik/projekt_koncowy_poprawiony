@@ -11,8 +11,9 @@ public class User {
     private Long id;
     private String FirstName;
     private String LastName;
-    private String login;
+    private String username;
     private String password;
+    private boolean enabled;
     private String imageUrl;
     private Double saldo;
 
@@ -47,12 +48,20 @@ public class User {
         LastName = lastName;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
     }
 
     public String getPassword() {
@@ -77,5 +86,13 @@ public class User {
 
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

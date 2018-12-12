@@ -1,23 +1,18 @@
 package com.application.project.controller;
 
 import com.application.project.Calculation;
-import com.application.project.Repository.LoginRepository;
 import com.application.project.Repository.PersonRepository;
 import com.application.project.Repository.UserRepository;
 import com.application.project.SaldoCalc;
-import com.application.project.model.Login;
 import com.application.project.model.Person;
 import com.application.project.model.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserController {
@@ -25,12 +20,12 @@ public class UserController {
 
     private UserRepository userRepository;
     private PersonRepository personRepository;
-    private LoginRepository loginRepository;
 
-    public UserController(UserRepository userRepository, PersonRepository personRepository, LoginRepository loginRepository) {
+
+    public UserController(UserRepository userRepository, PersonRepository personRepository)  {
         this.userRepository = userRepository;
         this.personRepository = personRepository;
-        this.loginRepository = loginRepository;
+
     }
 
     @GetMapping("/")
@@ -49,31 +44,23 @@ public class UserController {
     }
 
 
-    @PostMapping("/loguj")
-    @RequestMapping
-    public String logujU(@RequestParam String login, @RequestParam String password, Model model){
-        List<User> users = userRepository.findAll();
-        if(loginRepository.loginList().isEmpty()) {
+    @GetMapping("/loguj")
+    public String logujU(Model model, Principal principal){
+        if(!(principal.getName().isEmpty())) {
+            List<User> users = userRepository.findAll();
+            System.out.println(principal.getName());
             for (User user : users) {
-                if (login.equals(user.getLogin()) && password.equals(user.getPassword())) {
-                    Login login1 = new Login(login, password);
-                    loginRepository.saveLogin(login1);
+                if (principal.getName().equals(user.getUsername())) {
                     model.addAttribute("user", user);
                     return "redirect:" + ("/mypage?id=" + user.getId());
                 }
             }
         }
-    else {for (User user : users) {
-            if (loginRepository.loginList().get(0).getLogin().equals(user.getLogin()) &&
-                    loginRepository.loginList().get(0).getPassword().equals(user.getPassword())) {
-                model.addAttribute("user", user);
-                return "redirect:" + ("/mypage?id=" + user.getId());
-            }
-        }
-        }
-        return "redirect:/login/badlogin";}
 
-    @GetMapping("/login/badlogin")
+            return "redirect:/badlogin";
+    }
+
+    @GetMapping("/badlogin")
     @ResponseBody
     public String badlog(){
         return "Podałeś zły login lub hasło, lub nie jestes zarejestrowany";
@@ -107,12 +94,12 @@ public class UserController {
     @PostMapping("/dodajuser")
     public String add(@RequestParam String firstName,
                       @RequestParam String lastName,
-                      @RequestParam String login,
+                      @RequestParam String username,
                       @RequestParam String password){
         User user= new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setLogin(login);
+        user.setUsername(username);
         user.setPassword(password);
         userRepository.saveUser(user);
     return "home";}
@@ -122,23 +109,29 @@ public class UserController {
                          @RequestParam String firstNameP,
                          @RequestParam String lastNameP,
                          @RequestParam String ageP,
+                         Principal principal,
                          Model model)
-    {   Person person=new Person();
+    {
+        System.out.println(principal.getName());
+        Person person=new Person();
         person.setFirstName(firstNameP);
         person.setLastName(lastNameP);
         person.setAge(Integer.valueOf(ageP));
+        person.setToGive(0.00);
+        person.setToGet(0.00);
+        person.setInformationGet(" ");
+        person.setInformationGive(" ");
+        person.setImage("https://polandbusinessrun.pl/up/beneficiary/_/69fcbe52c37e59c6d41118648178030ce869219d-200x200.png");
+        person.setAbout(" ");
         List<User> users=userRepository.findAll();
-        List<Login> logins=loginRepository.loginList();
-        for (Login login:logins) {
             for (User user : users) {
-                if (login.getLogin().equals(user.getLogin()) && login.getPassword().equals(user.getPassword())) {
+                if (principal.getName().equals(user.getUsername()))  {
                     person.setUser(user);
                 }
             }
-        }
         personRepository.savePerson(person);
             model.addAttribute("person",person);
-        System.out.println(person.getUser().getId());
+        //System.out.println(person.getUser().getId());
         return "dodajp";
     }
 
@@ -147,7 +140,8 @@ public class UserController {
                          @RequestParam String firstNameP,
                          @RequestParam String lastNameP,
                          @RequestParam String ageP,
-                         Model model) {
+                         Model model,
+                         Principal principal) {
         List<Person> persons = personRepository.findAll();
         for (Person person : persons) {
             if (firstNameP.equals(person.getFirstName()) &&
@@ -157,10 +151,9 @@ public class UserController {
             }
         }
         List<User> users = userRepository.findAll();
-        List<Login> logins=loginRepository.loginList();
-        for (Login login:logins) {
+
             for (User user : users) {
-                if (login.getLogin().equals(user.getLogin()) && login.getPassword().equals(user.getPassword())) {
+                if (principal.getName().equals(user.getUsername())) {
                     List<Person> personsIDu = personRepository.findByUserId(user.getId());
                     SaldoCalc saldoCalc = new SaldoCalc();
                     Calculation calc = new Calculation();
@@ -175,8 +168,7 @@ public class UserController {
                     return "redirect:/loguj/mypage";
                 }
             }
-        }
-        return "redirect:/login/badlogin";}
+        return "redirect:/badlogin";}
 
 
 }

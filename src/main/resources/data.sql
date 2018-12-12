@@ -1,7 +1,12 @@
-insert into user (first_name, last_name, login, password, saldo, image_url)
-values ('Anna',	'Nowak',	'admin2',	'admin2',0,'https://i.vimeocdn.com/portrait/7854848_120x120.jpg'),
-('Ala',	'Pol',	'admin',	'admin',0, 'https://tandemhr.com/wp-content/uploads/2017/01/carrie-storozynski-200x200-cartoon.gif'),
-('Adam',	'Kowalski',	'akowalski',	'abcdef22',0, 'https://thumbs.dreamstime.com/thumblarge_9836/98363599.jpg');
+insert into user (first_name, last_name, username, password, enabled, saldo, image_url)
+values ('Anna',	'Nowak',	'admin2',	'{noop}admin2', true, 0,'https://i.vimeocdn.com/portrait/7854848_120x120.jpg'),
+('Ala',	'Pol',	'admin',	'{noop}admin',true, 0, 'https://tandemhr.com/wp-content/uploads/2017/01/carrie-storozynski-200x200-cartoon.gif'),
+('Adam',	'Kowalski',	'akowalski','{noop}abcdef22',true, 0, 'https://thumbs.dreamstime.com/thumblarge_9836/98363599.jpg');
+
+insert into user_role (username, role) values
+('admin2', 'admin'),
+('admin', 'user'),
+('akowalski', 'user');
 
 
 
