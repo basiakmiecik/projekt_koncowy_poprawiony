@@ -49,6 +49,9 @@ public class PersonRepository {
     {
         return entityManager.find(Person.class, id);
     }
+
+    @Transactional
+    public void updatePerson(Person person){ entityManager.merge(person);}
 }
 
 

@@ -10,41 +10,46 @@
     <title>Zarejestruj się!</title>
 </head>
 <body>
-<form class="needs-validation" novalidate method="post" action="/dodajuser">
-    <div class="form-row">
-        <div class="col-md-4 mb-3">
+<div class="container">
+<form class="needs-validation" novalidate method="post" th:action="@{/dodajuser}">
+    <div class="form">
+        <div class="col-3">
             <label for="firstName">Imię</label>
             <input type="String" class="form-control" id="firstName" name="firstName" placeholder="Imię">
+            <small> <a style=color:red> * </a></small>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-3">
             <label for="lastName">Nazwisko</label>
             <input type="String" class="form-control" id="lastName" name="lastName" placeholder="Nazwisko">
-            <div class="valid-feedback">
-                Looks good!
-            </div>
+            <small> <a style=color:red> * </a></small>
         </div>
-        <div class="col-md-4 mb-3">
+        <div class="col-3">
             <label for="username">Login</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Login" required>
+            <small> <a style=color:red> * </a></small>
             </div>
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="col-md-6 mb-3">
-            <label for="password2"></label>
+        <div class="col-3">
+            <label for="password2">Hasło</label>
             <input type="password" class="form-control" id="password2" name="password" placeholder="hasło" required>
+            <small> <a style=color:red> * </a></small>
         </div>
-        <div class="col-md-3 mb-3">
+        <div class="col-3">
             <label for="pass2">Powtórz hasło</label>
-            <input type="password" class="form-control" id="pass2" placeholder="Powtórz hasło" value=password2 required>
+            <input type="password" class="form-control" id="pass2" placeholder="Powtórz hasło"  required>
             <div class="valid-feedback">
                 Hasła są zgode!
+                <small> <a style=color:red> * </a></small>
             </div>
         </div>
-    <button class="btn btn-primary" type="submit">Submit form</button>
+        <div class="col-3">
+        <label for="imageUrl">Link do zdjęcia</label>
+        <input type="String" class="form-control" id="imageUrl" name="imageUrl" placeholder="Link do zdjęcia">
+    </div>
+        <small> zdjęcie musi mieć wymiary 200x200 pikseli, pole nieobowiązkowe</small>
+    <button class="btn-primary" type="submit">Zarejestruj</button>
     </div>
 </form>
-
+</div>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function() {
