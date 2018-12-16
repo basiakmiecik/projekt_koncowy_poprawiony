@@ -26,24 +26,34 @@
 
 <form method="get" th:action="@{|/editperson|}">
 <div class="form-group">
+    <div class="col-3">
     <label for="firstNameP" th:text="|Imię w bazie: ${person.firstName}|"> </label>
     <input type="text" class="form-control" id="firstNameP" name="firstNameP" placeholder="Nowe imię">
+    </div>
 </div>
 <div class="form-group">
+    <div class="col-3">
     <label for="lastNameP" th:text="|Nazwisko w bazie: ${person.lastName}|"> </label>
     <input type="text" class="form-control" id="lastNameP" name="lastNameP" placeholder="Nowe nazwisko">
+    </div>
 </div>
     <div class="form-group">
+        <div class="col-3">
         <label for="ageP" th:text="|Wiek w bazie: ${person.age}|"> </label>
         <input type="text" class="form-control" id="ageP" name="ageP" placeholder="Nowy wiek">
+        </div>
     </div>
     <div class="form-group">
+        <div class="col-3">
         <label for="imageP" th:text="|Zmień zdjęcie|"> </label>
         <input type="text" class="form-control" id="imageP" name="imageP" placeholder="link do nowego zdjęcia">
+        </div>
     </div>
     <div class="form-group">
+        <div class="col-3">
         <label for="aboutP" th:text="|Informacje o osobie w bazie: ${person.about}|"> </label>
         <input type="text" class="form-control" id="aboutP" name="aboutP" placeholder="Nowy opis">
+        </div>
     </div>
     <input type="hidden" name="idP" th:value="|${person.id}|">
     <div class="form-group p-2 mb-2">

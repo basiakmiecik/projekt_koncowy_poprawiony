@@ -1,13 +1,8 @@
 package com.application.project.controller;
 
-import com.application.project.Calculation;
-import com.application.project.Repository.PersonRepository;
-import com.application.project.Repository.UserRepository;
-import com.application.project.Repository.UserRoleRepository;
-import com.application.project.SaldoCalc;
-import com.application.project.model.Person;
-import com.application.project.model.User;
-import com.application.project.model.UserRole;
+import com.application.project.Repository.*;
+import com.application.project.model.*;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +21,18 @@ public class UserController {
     private UserRepository userRepository;
     private PersonRepository personRepository;
     private UserRoleRepository userRoleRepository;
+    private GivingRepository givingRepository;
+    private GettingRepository gettingRepository;
 
 
-    public UserController(UserRepository userRepository, PersonRepository personRepository, UserRoleRepository userRoleRepository)  {
+    public UserController(UserRepository userRepository, PersonRepository personRepository,
+                          UserRoleRepository userRoleRepository, GivingRepository givingRepository,
+                          GettingRepository gettingRepository) {
         this.userRepository = userRepository;
         this.personRepository = personRepository;
-        this.userRoleRepository=userRoleRepository;
-
+        this.userRoleRepository = userRoleRepository;
+        this.givingRepository = givingRepository;
+        this.gettingRepository = gettingRepository;
     }
 
     @GetMapping("/")
@@ -87,8 +87,16 @@ public class UserController {
 
     @RequestMapping("/person")
     public String person(@RequestParam Long id, Model model){
+        List<Object>personDebt=new ArrayList<>();
         Person byID= personRepository.findById(id);
-        model.addAttribute("person",byID);
+        personDebt.add(byID);
+        List<Getting> getbyID=gettingRepository.findByPersonId(id);
+        System.err.println(getbyID.toString());
+        personDebt.add(getbyID);
+        List<Giving> giving=givingRepository.findByPersonId(id);
+        personDebt.add(giving);
+
+        model.addAttribute("personDebt",personDebt);
         return "personpage";
     }
 
@@ -98,20 +106,20 @@ public class UserController {
         User user=userRepository.findByID(id);
         if(!(user.getUsername().equals(null))){
                 List<Person> persons=personRepository.findByUserId(user.getId());
-                SaldoCalc saldoCalc=new SaldoCalc();
-                Calculation calc=new Calculation();
-                saldoCalc.setSaldoAll(calc.saldoAll(persons));
-                saldoCalc.setSaldoGet(calc.saldoGet(persons));
-                saldoCalc.setSaldoGive(calc.saldoGive(persons));
+                List<Giving> giveList=giveList= givingRepository.findAll();
+                List<Getting> getList=getList=gettingRepository.findAll();
+                //List<Getting>getList= gettingRepository.findAll();
+            double saldo=0;
                 List<Object> results=new ArrayList<>();
                 results.add(user);
                 results.add(persons);
-                results.add(saldoCalc);
+                results.add(getList);
+                results.add(giveList);
+                results.add(saldo);
                 model.addAttribute("results", results);
                 return "userpage";}
             return "Podałeś zły login lub hasło, lub nie jestes zarejestrowany";
     }
-
 
     @PostMapping("/dodajuser")
     public String add(@RequestParam String firstName,
@@ -167,10 +175,6 @@ public class UserController {
                 person.setFirstName(firstNameP);
                 person.setLastName(lastNameP);
                 person.setAge(Integer.valueOf(ageP));
-                person.setToGive(0.00);
-                person.setToGet(0.00);
-                person.setInformationGet(" ");
-                person.setInformationGive(" ");
                 person.setImage("https://polandbusinessrun.pl/up/beneficiary/_/69fcbe52c37e59c6d41118648178030ce869219d-200x200.png");
                 person.setAbout(" ");
                 List<User> users=userRepository.findAll();
@@ -227,7 +231,45 @@ public class UserController {
         personRepository.updatePerson(person);
     return "redirect:/loguj";
     }
+    @PostMapping("/debt")
+    public String debt(@RequestParam String debt,
+                           @RequestParam String information,
+                           @RequestParam String id,
+                           @RequestParam String kind){
+        Person person=personRepository.findById(Long.valueOf(id));
+        switch (kind)
+        {
+            case "get":
+            Getting getting=new Getting();
+            getting.setDebt(Double.valueOf(debt));
+            getting.setInformationGet(information);
+            getting.setPerson(person);
+            gettingRepository.saveGet(getting);
+            break;
 
+            case "give":
+            Giving giving = new Giving();
+            giving.setDebt(Double.valueOf(debt));
+            giving.setInformationGive(information);
+            giving.setPerson(person);
+            givingRepository.saveGive(giving);
+            break;
+        }
+        return "redirect:/loguj";}
+
+        @PostMapping("/removerec")
+    public String removerecord(@RequestParam String id,
+                               @RequestParam String kind){
+        switch (kind){
+            case "get":
+                gettingRepository.removeGet( gettingRepository.findByID(Long.valueOf(id)));
+
+                break;
+            case "give":
+                givingRepository.removeGive(givingRepository.findByID(Long.valueOf(id)));
+                break;
+        }
+        return "redirect:/loguj";}
 
 
 }

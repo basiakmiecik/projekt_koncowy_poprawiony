@@ -20,8 +20,8 @@
         </p>
         <form th:action="@{|/logout|}">
         <div class="form-group p-2 mb-2">
-        <button type="submit" class="btn btn-primary" name="logout" th:ref="@{${/logout}}">Wyloguj</button>
-    </div>
+            <button type="submit" class="btn btn-primary" name="logout" th:ref="@{${/logout}}">Wyloguj</button>
+        </div>
         </form>
     </div>
 </div>
@@ -29,19 +29,41 @@
 <div class="container">
     <div class="row">
         <div class="col-sm">
-    <ul>
+        <ul>
            <li  class="media" th:each="person:${results.get(1)}">
                <img class="mr-3" th:src="@{${person.image}}"/>
                      <div class="media-body">
-                        <h5 class="mt-0 mb-1" th:text="|${person.firstName} ${person.lastName}" ></h5>
-                         <h5 th:text="|(+) ${person.toGet} |" ></h5>
-                         <h5 th:text="|(-) ${person.toGive}|"></h5>
-                         <h6 th:text="|Kategoria: pieniadze|"></h6>
-                         <h6><a th:href="@{|/person?id=${person.id}|}" th:text="|więcej|"></a></h6>
+                        <h5 class="mt-0 mb-1" th:text="|${person.firstName} ${person.lastName}|" >
+                        </h5>
+                         <h6 th:text="|Do dostania:|"></h6>
+                            <ul class="list-view" th:each="dostan:${results.get(2)}">
+                            <div th:with="statement=${dostan.person.id==person.id}">
+                                     <div th:if="${statement}">
+                                    <li th:text="|(+) ${dostan.debt} PLN - ${dostan.informationGet}|"></li>
+                                         <!-- <div th:with="${saldo=sum(dostan.debt)}"></div>-->
+                                     </div>
+                                     </div>
+                            </ul>
+
+                        <h6 th:text="|Do oddania:|"></h6>
+                         <ul class="list-view" th:each="oddaj:${results.get(3)}">
+                             <div th:with="statement=${oddaj.person.id==person.id}">
+                                 <div th:if="${statement}">
+                             <li th:text="|(-) ${oddaj.debt} PLN - ${oddaj.informationGive}|"></li>
+                                 </div>
+                             </div>
+                         </ul>
+                      <!--<h5 th:each="|(+) ${person.toGet.getdebt} |" ></h5>
+                         <h5 th:each="|(-) ${person.toGive.getdebt}|"></h5>-->
+                         <h6>
+                             <a th:href="@{|/person?id=${person.id}|}" th:text="|więcej|"></a>
+                         </h6>
                      </div>
+
             </li>
-    </ul>
-        </div>
+        </ul>
+    </div>
+    </div>
         <div class="col-sm">
             <div class="p-3 mb-2 bg-secondary text-white">
                 <h4 th:text="|Edytuj swoją listę osób|"></h4>
@@ -80,25 +102,7 @@
 </div>
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm">
-            <div class="p-3 mb-2 bg-info text-white">
-            <h5 th:text="|SALDO: ${results.get(2).saldoAll} PLN|"></h5>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="p-3 mb-2 bg-danger text-white">
-            <h5 th:text="|SALDO (-): ${results.get(2).saldoGive} PLN|"></h5>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="p-3 mb-2 bg-success text-white">
-                <h5 th:text="|SALDO(+) :${results.get(2).saldoGet} PLN|"></h5>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
 

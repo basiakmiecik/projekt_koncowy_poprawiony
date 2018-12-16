@@ -1,6 +1,7 @@
 package com.application.project.Repository;
 
 
+import com.application.project.model.Giving;
 import com.application.project.model.Person;
 import com.application.project.model.User;
 import org.springframework.stereotype.Repository;
@@ -52,6 +53,8 @@ public class PersonRepository {
 
     @Transactional
     public void updatePerson(Person person){ entityManager.merge(person);}
+
+
 }
 
 

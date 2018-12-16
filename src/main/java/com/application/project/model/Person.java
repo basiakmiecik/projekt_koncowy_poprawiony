@@ -1,7 +1,6 @@
 package com.application.project.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,17 +12,18 @@ public class Person {
 
     private String firstName;
     private String lastName;
-    private Double toGive;
-    private Double toGet;
-    private String informationGet;
-    private String informationGive;
     private String image;
     private Integer age;
     private String about;
 
-
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy="person")
+    private List<Getting> gettingList;
+
+    @OneToMany(mappedBy = "person")
+    private List<Giving> givingList;
 
     public Person() {
     }
@@ -52,21 +52,6 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public Double getToGive() {
-        return toGive;
-    }
-
-    public void setToGive(Double toGive) {
-        this.toGive = toGive;
-    }
-
-    public Double getToGet() {
-        return toGet;
-    }
-
-    public void setToGet(Double toGet) {
-        this.toGet = toGet;
-    }
 
     public String getImage() {
         return image;
@@ -100,19 +85,19 @@ public class Person {
         this.about = about;
     }
 
-    public String getInformationGet() {
-        return informationGet;
+    public List<Getting> getGettingList() {
+        return gettingList;
     }
 
-    public void setInformationGet(String informationGet) {
-        this.informationGet = informationGet;
+    public void setGettingList(List<Getting> gettingList) {
+        this.gettingList = gettingList;
     }
 
-    public String getInformationGive() {
-        return informationGive;
+    public List<Giving> getGivingList() {
+        return givingList;
     }
 
-    public void setInformationGive(String informationGive) {
-        this.informationGive = informationGive;
+    public void setGivingList(List<Giving> givingList) {
+        this.givingList = givingList;
     }
 }
