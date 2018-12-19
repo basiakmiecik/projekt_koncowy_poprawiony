@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
-    <title th:text="|${personDebt.get(0).firstName} ${personDebt.get(0).lastName}">Person Page</title>
+    <title th:text="|${personDebt.get(0).firstName} ${personDebt.get(0).lastName}|">Person Page</title>
 </head>
 <body>
 
@@ -16,7 +16,7 @@
             <div class="media">
                <img class="mr-3" th:src="@{${personDebt.get(0).image}}"/>
                      <div class="media-body">
-                        <h1 class="mt-0 mb-1" th:text="|${personDebt.get(0).firstName} ${personDebt.get(0).lastName}" ></h1>
+                        <h1 class="mt-0 mb-1" th:text="|${personDebt.get(0).firstName} ${personDebt.get(0).lastName}|" ></h1>
                         <h4> </h4>
                         <h4> </h4>
                         <h4 th:text="|${personDebt.get(0).about}|"> informacje o osobie</h4>
@@ -25,7 +25,7 @@
              </div>
         <form th:action="@{|/loguj|}">
             <div class="form-group p-2 mb-2">
-                <button type="submit" class="btn btn-primary"  th:ref="@{${/loguj}}">Twoja strona</button>
+                <button type="submit" class="btn btn-primary"  th:ref="@{${/loguj}}">Wróć</button>
             </div>
         </form>
     </div>
@@ -71,10 +71,10 @@
                 <input type="hidden" name="id" th:value="${personDebt.get(0).id}">
                 <div class="form-inline">
                     <div class="form-group p-2 mb-2">
-                        <button type="submit" class="btn btn-primary" name="kind" value="get">Dostań</button>
+                        <button type="submit" class="btn btn-primary" name="kind" value="get">+</button>
                     </div>
                     <div class="form-group p-2 mb-2">
-                        <button type="submit" class="btn btn-primary" name="kind" value="give">Oddaj</button>
+                        <button type="submit" class="btn btn-primary" name="kind" value="give">-</button>
                     </div>
                 </div>
             </form>

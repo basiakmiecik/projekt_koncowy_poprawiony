@@ -4,55 +4,34 @@ package com.application.project.Repository;
 import com.application.project.model.Giving;
 import com.application.project.model.Person;
 import com.application.project.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class PersonRepository {
-
-    @PersistenceContext
-    private EntityManager entityManager;
+public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Transactional
-    public void savePerson(Person person){
-        entityManager.persist(person);
-    }
+    @Query("delete from Person p")
+    void deleteBy(Person person);
 
-    @Transactional
-    public void removePerson(Person person){
-        entityManager.remove(person);
-    }
+    List<Person> findAll();
 
-    public List<Person> findAll() {
-        String jpql = "select p from Person p";
-        Query query = entityManager.createQuery(jpql);
-        List<Person> personList = query.getResultList();
-        return personList;
-    }
+    List<Person>findByUserId(Long userid);
 
-    public List<Person>findByUserId(Long userid){
-       // String jpql="select p from Person p";//where p.user_id =:user_id"
-        String jpql="select p from Person p where user_id= :userid";
-        TypedQuery<Person> query=entityManager.createQuery(jpql, Person.class);
-        query.setParameter("userid",userid);
-        List<Person> personID=query.getResultList();
-        return personID;
-    }
+    Person findByid(Long id);
 
-    public Person findById(Long id)
-    {
-        return entityManager.find(Person.class, id);
-    }
-
-    @Transactional
-    public void updatePerson(Person person){ entityManager.merge(person);}
+    /*@Modifying
+    @Query()
+    void update(Person person);*/
 
 
 }

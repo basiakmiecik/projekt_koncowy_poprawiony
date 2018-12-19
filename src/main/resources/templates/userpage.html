@@ -70,17 +70,26 @@
                 <form method="post" th:action="@{|/dodajp|}">
                     <div class="form-group">
                         <div class="col-9">
-                            <input type="text" class="form-control" name="firstNameP" placeholder="imie">
+                            <input type="text" class="form-control" name="firstNameP" placeholder="imie" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Pole wypełnione!
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-9">
-                            <input type="text" class="form-control" name="lastNameP" placeholder="nazwisko">
+                            <input type="text" class="form-control" name="lastNameP" placeholder="nazwisko" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Pole wypełnione!
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-3">
-                            <input type="text" class="form-control" name="ageP" placeholder="Wiek">
+                            <input type="number" class="form-control" name="ageP" placeholder="Wiek" required>
+                        </div>
+                        <div class="valid-feedback">
+                            Pole wypełnione!
                         </div>
                     </div>
                     <div class="form-inline">

@@ -7,26 +7,35 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
-    <title>Dostań lub oddaj</title>
+    <title>Gdzie są moje pieniąde?</title>
 </head>
 <body>
 <div class="container">
 <div class="jumbotron">
-    <h1 class="display-4">Dostań lub Oddaj</h1>
-    <img th:src="@{https://www.jbdalessandrolaw.com/wp-content/uploads/2016/07/couples-hands-holding-money-200x200.jpg}">
-    <p class="lead">Witaj na stronie dostań lub oddaj! Jeżeli często spotykasz się ze znajomymi i zapominasz
-        komu i co zalegasz lub co gorsza kto i co zalega Tobie, to ta strona jest właśnie dla Ciebie!
+
+    <img th:src="@{http://cultbox.co.uk/wp-content/uploads/2018/09/Screen-Shot-2018-09-05-at-06.44.54-350x200.png}">
+    <h1 class="display-4">Gdzie są moje pieniądze?</h1>
+    <p class="lead">Witaj na stronie! Jeżeli często spotykasz się ze znajomymi i zapominasz
+        komu i za co zalegasz lub co gorsza kto i za co zalega Tobie, to ta strona jest właśnie dla Ciebie!
     <hr class="my-4">
-    <p>Wystarczy się zarejestrować i już możesz spokojnie się witać ze znajomymi, bez zastanawiania się ile i co komu zalegam!</p>
+    <p>Wystarczy się zarejestrować i już możesz spokojnie się witać ze znajomymi, bez zastanawiania się ile i komu zalegam!</p>
+
+        <div th:if="${user}">
+            <p> Nie jesteś zalogowany, aby przejść do swojej strony  to się zaloguj. Jak nie masz jeszcze tu konta to możesz się zarejstrować.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" role="button" th:href="@{/login}">Zaloguj</a>
+                </p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" role="button" th:href="@{/register}">Zarejestruj się</a>
+                </p>
+        </div>
+       <!-- </div>-->
+    <div th:unless="${user}">
     <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button" th:href="@{/login}">Zaloguj</a>
+    <a> Jesteś już zalogowany, jezeli chcesz przejść do swojej strony kliknij w przycisk </a>
+        <a class="btn btn-primary btn-lg" role="button" th:href="|@{/loguj}|">Moja strona</a>
     </p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" role="button" th:href="@{/register}">Zarejestruj się</a>
-    </p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" role="button" th:href="@{/loguj}">Moja strona</a>
-    </p>
+    </div>
 </div>
 </div>
 
