@@ -13,7 +13,7 @@ public interface GivingRepository extends JpaRepository<Giving, Long> {
 
     @Transactional
     @Query("delete from Giving g")
-    void deleteBy(Giving giving);
+    void deleteById(Long id);
 
     List findAll();
 

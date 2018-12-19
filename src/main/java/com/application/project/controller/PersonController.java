@@ -60,7 +60,7 @@ public class PersonController {
                         if (firstNameP.equals(person.getFirstName())
                                 &&lastNameP.equals(person.getLastName())
                                 &&ageP.equals(String.valueOf(person.getAge()))) {
-                            personRepository.deleteBy(person);
+                            personRepository.deleteById(person.getId());
                         }
                     }
                     break;
@@ -158,11 +158,11 @@ public class PersonController {
                 @RequestParam String kind){
             switch (kind){
                 case "get":
-                    gettingRepository.deleteBy( gettingRepository.findByid(Long.valueOf(id)));
+                    gettingRepository.deleteById(Long.valueOf(id));
 
                     break;
                 case "give":
-                    givingRepository.deleteBy(givingRepository.findByid(Long.valueOf(id)));
+                    givingRepository.deleteById(Long.valueOf(id));
                     break;
             }
             return "redirect:/loguj";}

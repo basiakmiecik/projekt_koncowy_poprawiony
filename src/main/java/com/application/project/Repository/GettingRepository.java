@@ -15,8 +15,7 @@ import java.util.List;
 
 
     @Transactional
-    @Query("delete from Getting g")
-    void deleteBy(Getting getting);
+    void deleteById(Long id);
 
     Getting findByid(Long id);
 

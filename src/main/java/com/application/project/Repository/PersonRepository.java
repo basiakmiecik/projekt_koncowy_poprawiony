@@ -20,8 +20,7 @@ import java.util.List;
 public interface PersonRepository extends JpaRepository<Person, Long> {
 
     @Transactional
-    @Query("delete from Person p")
-    void deleteBy(Person person);
+    void deleteById(Long id);
 
     List<Person> findAll();
 
